@@ -17,6 +17,15 @@ builder.Services.AddDbContext<DataContext>(opt =>
     opt.UseSqlite(connectionString);
 });
 
+// Add CORS policy to allow requests from the React app
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
+});
+
 
 var app = builder.Build();
 
@@ -47,8 +56,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
-
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+
+
 
 app.UseAuthorization();
 app.MapControllers();
