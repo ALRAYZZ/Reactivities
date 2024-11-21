@@ -3,8 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css';
-import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
-import List from 'semantic-ui-react/dist/commonjs/elements/List';
+import { Header, List } from 'semantic-ui-react';
 
 
 function App() {

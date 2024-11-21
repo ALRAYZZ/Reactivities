@@ -1,3 +1,7 @@
+using API.Extensions;
+using Application.Activities;
+using Application.Core;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -8,24 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{   
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    opt.UseSqlite(connectionString);
-});
 
-// Add CORS policy to allow requests from the React app
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-    });
-});
 
+// We refactor the code on the Extensions folder to make it more readable
+// So we keep the main code clean and just call one method to add all the services
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
